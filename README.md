@@ -6,7 +6,6 @@
 ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white)
 
 <div align="center">
   <img src="image.png" alt="BeQuiet Website Screenshot" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);"/>
@@ -25,7 +24,6 @@
 - **🗄️ Динамічна база даних:** Використання `better-sqlite3` для швидкого та локального зберігання даних (повідомлень та публікацій).
 - **✉️ Система повідомлень:** Користувачі можуть залишати повідомлення через контактну форму, які зберігаються в базі та доступні для перегляду в адмінці.
 - **🌍 Мультимовність:** Підтримка декількох мов завдяки інтеграції `i18next`.
-- **🧠 AI Інтеграція:** Підключений Google Gemini AI для розширення можливостей сайту.
 - **📄 Автоматизація резюме:** Вбудований Python-скрипт (`generate_resume.py`) для автоматичної генерації професійного резюме у форматі `.docx`.
 - **🎨 Сучасний UI/UX:** Адаптивний дизайн за допомогою Tailwind CSS, іконки Lucide та плавні анімації від Framer Motion.
 
@@ -43,10 +41,6 @@
 **Backend & Database:**
 * Node.js + Express
 * SQLite3 (`better-sqlite3`)
-
-**Додатково:**
-* Python + `python-docx` (для утиліти генерації резюме)
-* Google Generative AI SDK
 
 ## 🚀 Встановлення та запуск
 
