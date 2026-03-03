@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sun, Moon, Github, Send, Mail, MapPin, Briefcase, Code2, Terminal, ArrowUpRight, Plus, Trash2, GitCommit, Star, GitFork, ExternalLink, Menu, X, Loader2, Folder, File, ChevronLeft, FileText, Zap, Clock, Sparkles, Download, Share2, ArrowUp, Copy, CheckCircle2, Activity, Globe, MessageSquare, Newspaper, Settings, Reply } from 'lucide-react';
 import clsx from 'clsx';
