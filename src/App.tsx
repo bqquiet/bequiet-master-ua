@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useContext, useRef } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sun, Moon, Github, Send, Mail, MapPin, Briefcase, Code2, Terminal, ArrowUpRight, Plus, Trash2, GitCommit, Star, GitFork, ExternalLink, Menu, X, Loader2, Folder, File, ChevronLeft, FileText, Zap, Clock, Sparkles, Download, Share2, ArrowUp, Copy, CheckCircle2, Activity, Globe, MessageSquare, Newspaper, Settings, Reply } from 'lucide-react';
+import { Sun, Moon, Github, Send, Mail, MapPin, Briefcase, Code2, Terminal, ArrowUpRight, Plus, Trash2, GitCommit, Star, GitFork, ExternalLink, Menu, X, Loader2, Folder, File, ChevronLeft, FileText, Zap, Clock, Sparkles, Download, Share2, ArrowUp, Copy, CheckCircle2, Activity, Globe, MessageSquare, Newspaper, Settings, Reply, Users } from 'lucide-react';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import ReactQuill from 'react-quill-new';
@@ -9,6 +9,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import i18n from 'i18next';
 import { initReactI18next, useTranslation } from 'react-i18next';
 import useSound from 'use-sound';
+import { io } from 'socket.io-client';
 
 // i18n resources
 const resources = {
@@ -56,6 +57,11 @@ const resources = {
         save_draft: "Save Draft",
         manage: "Manage Entries",
         views: "views"
+      },
+      viewers: {
+        online: "online",
+        viewer: "viewer",
+        viewers: "viewers"
       }
     }
   },
@@ -103,6 +109,11 @@ const resources = {
         save_draft: "В чернетки",
         manage: "Керування",
         views: "переглядів"
+      },
+      viewers: {
+        online: "на сайті",
+        viewer: "людина",
+        viewers: "людей"
       }
     }
   }
@@ -388,6 +399,41 @@ const Footer = () => {
   );
 };
 
+const LiveViewers = () => {
+  const [viewers, setViewers] = useState(1);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    // Connect to the Socket.io server
+    // Use relative path so it works on both local and production
+    const socket = io();
+
+    socket.on('viewers_count', (count: number) => {
+      setViewers(count);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="fixed bottom-6 left-6 z-50 flex items-center gap-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-zinc-200/50 dark:border-zinc-800/50"
+    >
+      <div className="relative flex h-3 w-3">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+      </div>
+      <span className="text-xs font-medium text-zinc-600 dark:text-zinc-300">
+        {viewers} {viewers === 1 ? t('viewers.viewer') : t('viewers.viewers')} {t('viewers.online')}
+      </span>
+    </motion.div>
+  );
+};
+
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const [isFocusMode, setIsFocusMode] = useState(false);
@@ -424,6 +470,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </main>
       <Footer />
       <BackToTop />
+      <LiveViewers />
     </div>
   );
 };

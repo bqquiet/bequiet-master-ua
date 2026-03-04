@@ -3,6 +3,8 @@ import { createServer as createViteServer } from "vite";
 import Database from "better-sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -53,7 +55,27 @@ let currentProject = {
 
 async function startServer() {
   const app = express();
+  const httpServer = createServer(app);
+  const io = new Server(httpServer, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    }
+  });
+
   const PORT = parseInt(process.env.PORT || "3000", 10);
+
+  // Socket.io logic
+  let viewersCount = 0;
+  io.on("connection", (socket) => {
+    viewersCount++;
+    io.emit("viewers_count", viewersCount);
+
+    socket.on("disconnect", () => {
+      viewersCount--;
+      io.emit("viewers_count", viewersCount);
+    });
+  });
 
   app.use(express.json());
 
@@ -200,7 +222,7 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
+  httpServer.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 }
