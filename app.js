@@ -191,7 +191,7 @@ const ROUTES = {
   '/':        { render: pageHome,    init: initHome    },
   '/news':    { render: pageNews,    init: initNews    },
   '/about':   { render: pageAbout,   init: null        },
-  '/contact': { render: pageContact, init: initContact },
+  '/contact': { render: pageContact, init: null },
   '/admin':   { render: pageAdmin,   init: initAdmin   },
 };
 
@@ -439,7 +439,7 @@ function initFocusMode() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 function pageHome() {
-  const techs = ['Python','JavaScript','TypeScript','React','Node.js','Express','Tailwind CSS','HTML/CSS','SQLite','Vite','Git','GitHub','C/C++','PostgreSQL','Docker'];
+  const techs = ['Python','C/C++','HTML','CSS','SQL','GIT','GITHUB','DOCKER','VSCODE'];
   return `
     <div style="display:flex;flex-direction:column;gap:3rem;">
       <!-- Hero -->
@@ -812,8 +812,8 @@ window.shareArticle = function(article) {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 function pageAbout() {
-  const langs = ['Python','JavaScript','TypeScript','C/C++','HTML/CSS','SQL','Java','C#'];
-  const tools = ['React','Node.js','Express','Tailwind CSS','Vite','SQLite','Git','GitHub','PostgreSQL','Docker','Linux','Nginx'];
+  const langs = ['Python','C/C++','HTML','CSS','SQL'];
+  const tools = ['GIT','GITHUB','DOCKER','VSCODE'];
   return `
     <div style="max-width:56rem;margin:0 auto;">
       <div class="glass-card about-main">
@@ -887,69 +887,8 @@ function pageContact() {
         `).join('')}
       </div>
 
-      <div class="glass-card contact-form-wrap">
-        <div style="text-align:center;margin-bottom:2rem;">
-          <h2 style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:.5rem;">Send a Message</h2>
-          <p style="color:var(--text-muted);">I'll get back to you as soon as possible.</p>
-        </div>
-        <form id="contact-form">
-          <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label">Name</label>
-              <input class="form-input" type="text" id="form-name" placeholder="John Doe" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <input class="form-input" type="email" id="form-email" placeholder="john@example.com" required />
-            </div>
-          </div>
-          <div class="form-group" style="margin-bottom:1.5rem;">
-            <label class="form-label">Message</label>
-            <textarea class="form-textarea" id="form-message" rows="4" placeholder="How can I help you?" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-blue" id="form-submit" style="width:100%;justify-content:center;padding:1rem;">
-            ${icon('send',20)} Send Message
-          </button>
-        </form>
-      </div>
     </div>
   `;
-}
-
-function initContact() {
-  const form = document.getElementById('contact-form');
-  if (!form) return;
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    const btn = document.getElementById('form-submit');
-    const name    = document.getElementById('form-name').value;
-    const email   = document.getElementById('form-email').value;
-    const message = document.getElementById('form-message').value;
-    btn.disabled = true;
-    btn.innerHTML = `${icon('loader2',20,'spinner')} Sending...`;
-    try {
-      const res = await fetch('/api/messages', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({name,email,message})
-      });
-      if (res.ok) {
-        playSuccess();
-        btn.innerHTML = `${icon('check-circle2',20)} Sent Successfully!`;
-        form.reset();
-        setTimeout(()=>{
-          btn.disabled = false;
-          btn.innerHTML = `${icon('send',20)} Send Message`;
-        }, 3000);
-      } else {
-        throw new Error('Server error');
-      }
-    } catch(err) {
-      btn.disabled = false;
-      btn.innerHTML = `${icon('send',20)} Send Message`;
-      alert('Failed to send. Please try again.');
-    }
-  });
 }
 
 window.copyContact = function(text, type) {
