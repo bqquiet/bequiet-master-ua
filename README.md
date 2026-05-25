@@ -2,7 +2,7 @@
 
 Personal portfolio & blog. Built with Vanilla HTML, CSS, and JavaScript — no frameworks, no build tools.
 
-🔗 [**Live Demo**]([https://your-live-demo-link.com](https://bqquiet.github.io/bequiet-master-ua/))
+🔗 [**Live Demo**]([https://bqquiet.github.io/bequiet-master-ua/](https://bqquiet.github.io/bequiet-master-ua/))
 
 ---
 
